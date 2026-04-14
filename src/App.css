@@ -182,6 +182,14 @@
     border-right-color: var(--border);
   }
 }
+.dark {
+  background-color: black;
+  color: white;
+  height: 100vh;
+}
+
 .light {
-  background: white;
+  background-color: white;
+  color: black;
+  height: 100vh;
 }

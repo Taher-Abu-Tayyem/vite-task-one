@@ -1,14 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
 
 function App() {
   const [Task, setTask] = useState("Task One")
   const [count, setCount] = useState(0)
-  const [theme, setTheme] = useState("dark")
 
 
+ // 👇 نخزن الثيم من localStorage أول ما يفتح الموقع
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
 
+  // 👇 كل ما يتغير الثيم نخزنه
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   return (
          <div className={theme}> 
