@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 
 import './App.css'
+import { MdNightlight } from 'react-icons/md';
+import { FaRegSun } from "react-icons/fa6";
 
 function App() {
   const [Task, setTask] = useState("Task One")
@@ -31,8 +33,16 @@ function App() {
                     <br />
           <button onClick={() => setTheme("light")}>light</button>
           <button onClick={() => setTheme("dark")}>dark</button>
-          
+          <br /> 
+
+          <div>
+            <button onClick={   () => {
+              setTheme(theme === "light" ? "dark" : "light")
+            }
+            } style={{marginTop:"30px"}}>{theme === "light" ? <MdNightlight /> : <FaRegSun />}</button>
+          </div>
         </div>
+        
     
   )
 }
