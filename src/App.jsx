@@ -1,23 +1,25 @@
 import { useEffect, useReducer, useState } from "react";
-
+import { Link } from "react-router-dom";
 import "./App.css";
 import { MdNightlight } from "react-icons/md";
 import { FaRegSun } from "react-icons/fa6";
 
-const initialScore = 
-  {
-    Field: "React",
-    level: "mid",
-    count: 0,
-    theme: "light",
-    color: "red",
-  }
-;
 
+import {useContext } from "react";
+import Data from "./Context/Data.jsx";
+
+/* 
+const initialScore = {
+  Field: "React",
+  level: "mid",
+  count: 0,
+  color: localStorage.getItem("color") || "red",
+  theme: localStorage.getItem("theme") || "light",
+};
 const reducer = (state, action) => {
   switch (action.type) {
     case "Changecountplus":
-      return { ...state, count: action.newcount  };
+      return { ...state, count: action.newcount };
     case "Changecount":
       return { ...state, count: action.newcount };
     case "Reset":
@@ -27,12 +29,12 @@ const reducer = (state, action) => {
     case "CHANGE_LEVEL":
       return { ...state, level: action.newlevel };
     case "CHANGE_THEME":
-      return { ...state, theme: action.newTheme ,color: action.newcolor};
-    
+      return { ...state, theme: action.newTheme, color: action.newcolor };
+
     default:
       return state;
   }
-};
+}; */
 function App() {
   /*
   const [Task, setTask] = useState("Task One")
@@ -50,58 +52,64 @@ function App() {
   }, [theme]);
  */
 
-  const [Data, dispatch] = useReducer(reducer, initialScore);
 
+/*   const [Data, dispatch] = useReducer(reducer, initialScore);
+ */
+
+/*   useEffect(() => {
+    localStorage.setItem("theme", Data.theme);
+    localStorage.setItem("color", Data.color);
+  }, [Data.theme, Data.color]);
+ */
+  const {Field,level,count,color,theme,changeField,changeLevel,changeCount,changeCountplus,changeTheme,changeReset} = useContext(Data);
   return (
-    <div className={Data.theme} >
-      <h1 style={{ color: Data.color }}>My level is{Data.Field}</h1>
+    <div className={theme}>
+      <h1 style={{ color: color }}>My level is{Field}</h1>
       <br />
       <button
-        onClick={() => {
-          dispatch({ type: "ChangeField", newField: "Anagular" });
-        }}
+        onClick={() => {changeField()}}
       >
         Change Field
       </button>
       <br />
       <button
-        onClick={() =>
-          dispatch({ type: "Changecountplus", newcount: Data.count + 1 })
+        onClick={() =>{
+changeCountplus()       }}
+      >
+        Counter { count }+
+      </button>
+      <br />
+      { <button
+        onClick={() =>{
+changeLevel()       }}    >
+        My level is { level}
+      </button>
+ }
+      <br />
+     {  <button
+        onClick={() =>{
+          changeCount()}
         }
       >
-        {" "}
-        Counter {Data.count}+
-      </button>
+        Counter { count}-
+      </button> } 
       <br />
-      <button
-        onClick={() => dispatch({ type: "CHANGE_LEVEL", newlevel: "High" })}
-      >
-        My level is {Data.level}
-      </button>
-
-      <br />
-      <button
-        onClick={() =>
-          dispatch({ type: "Changecount", newcount: Data.count - 1 })
-        }
-      >
-      
-        Counter {Data.count}-
-      </button>
-      <br />
-      <button onClick={() => dispatch({ type: "Reset", newcount: 0 })}>
+    {  <button onClick={() =>changeReset()}>
         rest counter
-      </button>
-      <br />
-      
-      <button
-        onClick={() => dispatch({ type: "CHANGE_THEME", newTheme: "dark" ,newcolor:"White" })}
-      >
-        dark
-      </button>
-      <br />
+      </button> }
 
-    
+      <br />
+      {<button
+        onClick={() =>
+          changeTheme()
+        }
+      >
+        { theme === "light" ? <MdNightlight /> : <FaRegSun />}
+      </button> }
+      <br />
+      <button>
+        <Link to="/Home">Go to Home </Link>
+      </button>
     </div>
   );
 }
